@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Box, FormControl, Typography, TextField, InputAdornment } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import Fuse from 'fuse.js'
@@ -17,30 +17,28 @@ export const EmployeesPage: React.FC<Props> = ({employees}) => {
   const [searchKeyword, setSearchKeyword] = useState('')
   const [filteredEmployees, setFilteredEmployees] = useState<Employees>(employees)
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value)
+  const handleSearch = (keyword: string) => {
+    setSearchKeyword(keyword)
   }
 
-  useEffect(() => {
-    if (!searchKeyword) {
-      setFilteredEmployees(employees)
-      return
-    }
-
+  const fuse = useMemo(() => {
     const fuseOption = {
       keys: ['name'],
     }
-    const fuse = new Fuse(employees, fuseOption)
+    return new Fuse(employees, fuseOption)
+  }, [employees])
 
-    const result = fuse.search(searchKeyword)
-    setFilteredEmployees(result.map((r) => r.item))
-  }, [searchKeyword, employees])
+  useEffect(() => {
+    // 検索キーワードが空だったら全従業員を表示
+    const result = searchKeyword ? fuse.search(searchKeyword).map(r => r.item) : employees;
+    setFilteredEmployees(result);
+  }, [searchKeyword, employees, fuse]);
 
   return (
     <Box>
       <Typography variant="h4">従業員一覧</Typography>
       <FormControl>
-        <TextField value={searchKeyword} onInput={handleSearch} InputProps={{startAdornment: (
+        <TextField value={searchKeyword} onInput={(e: React.ChangeEvent<HTMLInputElement>) => handleSearch(e.target.value)} InputProps={{startAdornment: (
           <InputAdornment position="start">
             <SearchIcon />
           </InputAdornment>
