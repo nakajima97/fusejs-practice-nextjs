@@ -9,7 +9,8 @@
     "lint": "next lint",
     "test": "jest",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.5.0",
+    "@faker-js/faker": "^8.4.1",
     "@storybook/addon-essentials": "^8.1.10",
     "@storybook/addon-interactions": "^8.1.10",
     "@storybook/addon-links": "^8.1.10",
