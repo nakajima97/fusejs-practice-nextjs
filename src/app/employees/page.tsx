@@ -1,8 +1,6 @@
 import { faker } from "@/utils/faker";
 
-import type { Employee } from "@/features/Employee/types";
-import { EmployeeList } from "@/features/Employee/components/EmployeeList";
-import { Box, Typography } from "@mui/material";
+import { EmployeesPage } from "@/features/Employee/components/EmployeesPage";
 
 const Page = () => {
   // 100名の従業員を生成
@@ -13,10 +11,7 @@ const Page = () => {
   }));
 
   return (
-    <Box>
-      <Typography variant="h4">従業員一覧</Typography>
-      <EmployeeList employees={employees} />
-    </Box>
+    <EmployeesPage employees={employees}/>
   );
 };
 
