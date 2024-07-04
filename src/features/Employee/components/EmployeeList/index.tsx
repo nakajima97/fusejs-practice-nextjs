@@ -6,7 +6,7 @@ import { Employees } from "../../types";
 
 type Props = {
   employees: Employees;
-}
+};
 
 export const EmployeeList = ({ employees }: Props) => {
   return (
@@ -15,5 +15,5 @@ export const EmployeeList = ({ employees }: Props) => {
         <EmployeeListItem key={employee.id} {...employee} />
       ))}
     </List>
-  )
-}
+  );
+};
