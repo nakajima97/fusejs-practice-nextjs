@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Fuse from 'fuse.js'
 
 import { EmployeeList } from "@/features/Employee/components/EmployeeList";
+import { useFilterEmployees } from "../../hooks/useFilterEmployees";
 import type { Employees } from "@/features/Employee/types";
 
 type Props = {
@@ -15,24 +16,11 @@ type Props = {
 
 export const EmployeesPage: React.FC<Props> = ({employees}) => {
   const [searchKeyword, setSearchKeyword] = useState('')
-  const [filteredEmployees, setFilteredEmployees] = useState<Employees>(employees)
+  const { filteredEmployees } = useFilterEmployees({employees, searchKeyword})
 
   const handleSearch = (keyword: string) => {
     setSearchKeyword(keyword)
   }
-
-  const fuse = useMemo(() => {
-    const fuseOption = {
-      keys: ['name'],
-    }
-    return new Fuse(employees, fuseOption)
-  }, [employees])
-
-  useEffect(() => {
-    // 検索キーワードが空だったら全従業員を表示
-    const result = searchKeyword ? fuse.search(searchKeyword).map(r => r.item) : employees;
-    setFilteredEmployees(result);
-  }, [searchKeyword, employees, fuse]);
 
   return (
     <Box>
