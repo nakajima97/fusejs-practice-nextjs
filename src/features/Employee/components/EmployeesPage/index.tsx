@@ -1,9 +1,8 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, {  useState } from "react";
 import { Box, FormControl, Typography, TextField, InputAdornment } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import Fuse from 'fuse.js'
 
 import { EmployeeList } from "@/features/Employee/components/EmployeeList";
 import { useFilterEmployees } from "../../hooks/useFilterEmployees";
