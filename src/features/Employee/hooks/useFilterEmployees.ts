@@ -12,21 +12,14 @@ type ReturnValue = {
 }
 
 export const useFilterEmployees = ({ employees, searchKeyword }: Arguments): ReturnValue => {
-  const [filteredEmployees, setFilteredEmployees] = useState<Employees>(employees)
+  const fuseOption = {
+    keys: ['name'],
+    threshold: 0.6, // 検索の厳しさを設定
+  }
+  const fuse = new Fuse(employees, fuseOption)
 
-  const fuse = useMemo(() => {
-    const fuseOption = {
-      keys: ['name'],
-      threshold: 0.6, // 検索の厳しさを設定
-    }
-    return new Fuse(employees, fuseOption)
-  }, [employees])
-
-  useEffect(() => {
-    // 検索キーワードが空だったら全従業員を表示
-    const result = searchKeyword ? fuse.search(searchKeyword).map(r => r.item) : employees;
-    setFilteredEmployees(result);
-  }, [searchKeyword, employees, fuse]);
+  // 検索キーワードが空だったら全従業員を表示
+  const filteredEmployees = searchKeyword ? fuse.search(searchKeyword).map(r => r.item) : employees;
 
   return {
     filteredEmployees
