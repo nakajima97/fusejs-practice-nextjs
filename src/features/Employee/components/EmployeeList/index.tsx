@@ -1,5 +1,5 @@
 import React from "react";
-import { List } from "@mui/material";
+import { List, Typography } from "@mui/material";
 
 import { EmployeeListItem } from "../EmployeeListItem";
 import { Employees } from "../../types";
@@ -14,6 +14,7 @@ export const EmployeeList = ({ employees }: Props) => {
       {employees.map((employee) => (
         <EmployeeListItem key={employee.id} {...employee} />
       ))}
+      {employees.length === 0 && <Typography>従業員が見つかりませんでした</Typography>}
     </List>
   );
 };
