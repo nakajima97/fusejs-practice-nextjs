@@ -17,6 +17,8 @@ export const useFilterEmployees = ({ employees, searchKeyword }: Arguments): Ret
   const fuse = useMemo(() => {
     const fuseOption = {
       keys: ['name'],
+      threshold: 0.6, // 検索の厳しさを設定
+      location: 0, // マッチの位置を考慮。0は考慮しない
     }
     return new Fuse(employees, fuseOption)
   }, [employees])
